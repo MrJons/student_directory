@@ -17,8 +17,12 @@ def input_students
   end
 
   while !name.empty? do
-    students << {name: name, cohort: cohort || :november, hobby: hobby}
-    puts "Now we have #{students.count} students."
+    students << {name: name, cohort: cohort, hobby: hobby}
+    if students.length == 1
+      puts "Now we have #{students.count} student."
+    else
+      puts "Now we have #{students.count} students."
+    end
 
     puts "Name: "
     name = gets.chomp
@@ -51,7 +55,13 @@ end
 
 def print_footer(students)
   puts ("---------------------------").center(180)
-  puts ("Overall we have #{students.count} great students.").center(180)
+  if students.count == 0
+    puts ("We currently have no students").center(180)
+  elsif students.count == 1
+    puts ("Overall we have #{students.count} great student.").center(180)
+  else
+    puts ("Overall we have #{students.count} great students.").center(180)
+  end
 end
 
 def name_starter(students)
