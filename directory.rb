@@ -1,16 +1,24 @@
 puts ""
 
 def input_students
-  puts "Please enter the names of the students."
-  puts "To finish, just hit return twice."
+  puts "Please enter the names & hobbies of the students."
+  puts "To finish, just hit return thrice."
 
   students = []
-  name = gets.chomp
+
+  puts "Name: "
+  name = gets.chomp!
+  puts "Hobby: "
+  hobby = gets.chomp!
 
   while !name.empty? do
-    students << {name: name, cohort: :november}
+    students << {name: name, cohort: :november, hobby: hobby}
     puts "Now we have #{students.count} students."
+
+    puts "Name: "
     name = gets.chomp
+    puts "Hobby: "
+    hobby = gets.chomp
   end
 
   students
@@ -25,7 +33,7 @@ def print(students)
   marker = students.length
   index = 0
   until index == marker
-      puts "#{index + 1}.#{students[index][:name]} (#{students[index][:cohort]} cohort)"
+      puts "#{index + 1}.#{students[index][:name]} (enjoys #{students[index][:hobby]}) (#{students[index][:cohort]} cohort)"
       index += 1
   end
 end
