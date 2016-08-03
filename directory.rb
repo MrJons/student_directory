@@ -12,6 +12,9 @@ def input_students
   hobby = gets.chomp
   puts "Cohort: "
   cohort = gets.chomp.to_sym
+  if cohort == ""
+    cohort = :november
+  end
 
   while !name.empty? do
     students << {name: name, cohort: cohort || :november, hobby: hobby}
@@ -23,6 +26,9 @@ def input_students
     hobby = gets.chomp
     puts "Cohort: "
     cohort = gets.chomp
+    if cohort == ""
+      cohort = :november
+    end
   end
 
   students
