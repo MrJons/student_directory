@@ -22,8 +22,11 @@ def print_header
 end
 
 def print(students)
-  students.each.with_index(1) do |student, index|
-    puts "#{index}.#{student[:name]} (#{student[:cohort]} cohort)"
+  marker = students.length
+  index = 0
+  until index == marker
+      puts "#{index + 1}.#{students[index][:name]} (#{students[index][:cohort]} cohort)"
+      index += 1
   end
 end
 
@@ -41,10 +44,18 @@ def name_starter(students)
   end
 end
 
+def names_shorther_then_12(students)
+  puts "Only names shorther than twelve characters will be printed."
+  students.each.with_index(1) do |student, index|
+    if student[:name].length < 12
+      puts "#{index}.#{student[:name]} (#{student[:cohort]} cohort)"
+    end
+  end
+end
 
 students = input_students
 print_header
-name_starter(students)
+print(students)
 print_footer(students)
 
 puts ""
