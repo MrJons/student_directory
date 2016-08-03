@@ -22,8 +22,8 @@ def print_header
 end
 
 def print(students)
-  students.each do |student|
-    puts "#{student[:name]} (#{student[:cohort]} cohort)"
+  students.each.with_index(1) do |student, index|
+    puts "#{index}.#{student[:name]} (#{student[:cohort]} cohort)"
   end
 end
 
@@ -31,9 +31,20 @@ def print_footer(students)
   puts "Overall we have #{students.count} great students."
 end
 
+def name_starter(students)
+  puts "Enter the letter you want to view student names by."
+  letter = gets.chomp
+  students.each.with_index(1) do |student, index|
+    if student[:name][0] == letter
+      puts "#{index}.#{student[:name]} (#{student[:cohort]} cohort)"
+    end
+  end
+end
+
+
 students = input_students
 print_header
-print(students)
+name_starter(students)
 print_footer(students)
 
 puts ""
