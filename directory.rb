@@ -7,39 +7,45 @@ def input_students
   students = []
 
   puts "Name: "
-  name = gets.chomp!
+  name = gets.chomp
   puts "Hobby: "
-  hobby = gets.chomp!
+  hobby = gets.chomp
+  puts "Cohort: "
+  cohort = gets.chomp.to_sym
 
   while !name.empty? do
-    students << {name: name, cohort: :november, hobby: hobby}
+    students << {name: name, cohort: cohort || :november, hobby: hobby}
     puts "Now we have #{students.count} students."
 
     puts "Name: "
     name = gets.chomp
     puts "Hobby: "
     hobby = gets.chomp
+    puts "Cohort: "
+    cohort = gets.chomp
   end
 
   students
 end
 
 def print_header
-  puts "The students of villains academy"
-  puts "---------"
+  puts ("The students of villains academy").center(180)
+  puts ("---------------------------").center(180)
 end
 
 def print(students)
   marker = students.length
   index = 0
   until index == marker
-      puts "#{index + 1}.#{students[index][:name]} (enjoys #{students[index][:hobby]}) (#{students[index][:cohort]} cohort)"
+      output = "#{index + 1}.#{students[index][:name]} (enjoys #{students[index][:hobby]}) (#{students[index][:cohort]} cohort)"
+      puts output.center(180)
       index += 1
   end
 end
 
 def print_footer(students)
-  puts "Overall we have #{students.count} great students."
+  puts ("---------------------------").center(180)
+  puts ("Overall we have #{students.count} great students.").center(180)
 end
 
 def name_starter(students)
