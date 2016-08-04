@@ -32,18 +32,22 @@ user_input = Proc.new do
   $cohort = :november if $cohort.empty?
 end
 
-def print_header
-  puts ("The students of villains academy").center(180)
-  puts ("---------------------------").center(180)
+def print_header(students)
+  if students.count > 0
+    puts ("The students of villains academy").center(180)
+    puts ("---------------------------").center(180)
+  end
 end
 
 def print(students)
-  marker = students.length
-  index = 0
-  until index == marker
+  if students.count > 0
+    marker = students.length
+    index = 0
+    until index == marker
       output = "#{index + 1}.#{students[index][:name]} (enjoys #{students[index][:hobby]}) (#{students[index][:cohort]} cohort)"
       puts output.center(180)
       index += 1
+    end
   end
 end
 
@@ -78,7 +82,7 @@ def names_shorther_then_12(students)
 end
 
 students = input_students(user_input)
-print_header
+print_header(students)
 print(students)
 print_footer(students)
 
