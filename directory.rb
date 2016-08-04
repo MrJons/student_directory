@@ -1,41 +1,35 @@
 puts ""
 
-def input_students
+def input_students input_proc
   puts "Please enter the names & hobbies of the students."
   puts "To finish, just hit return thrice."
 
   students = []
 
-  puts "Name: "
-  name = gets.chomp
-  puts "Hobby: "
-  hobby = gets.chomp
-  puts "Cohort: "
-  cohort = gets.chomp.to_sym
-  if cohort == ""
-    cohort = :november
-  end
+  input_proc.call
 
-  while !name.empty? do
-    students << {name: name, cohort: cohort, hobby: hobby}
+  while !$name.empty? do
+    students << {name: $name, cohort: $cohort, hobby: $hobby}
     if students.length == 1
       puts "Now we have #{students.count} student."
     else
       puts "Now we have #{students.count} students."
     end
 
-    puts "Name: "
-    name = gets.chomp
-    puts "Hobby: "
-    hobby = gets.chomp
-    puts "Cohort: "
-    cohort = gets.chomp
-    if cohort == ""
-      cohort = :november
-    end
+    input_proc.call
   end
 
   students
+end
+
+user_input = Proc.new do
+  puts "Name: "
+  $name = gets.chomp
+  puts "Hobby: "
+  $hobby = gets.chomp
+  puts "Cohort: "
+  $cohort = gets.chomp
+  $cohort = :november if $cohort.empty?
 end
 
 def print_header
@@ -83,7 +77,7 @@ def names_shorther_then_12(students)
   end
 end
 
-students = input_students
+students = input_students(user_input)
 print_header
 print(students)
 print_footer(students)
