@@ -81,17 +81,17 @@ def print_menu
 end
 
 def show_students
-  print_header(@students)
-  print_students_list(@students)
-  print_footer(@students)
+  print_header
+  print_students_list
+  print_footer
 end
 
 def process(choice)
   case choice
   when "1"
-    @students = @input_students(user_input)
+    input_students(@user_input)
   when "2"
-    @show_students
+    show_students
   when "9"
     exit
   else
