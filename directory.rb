@@ -12,6 +12,8 @@ def print_menu
   puts "What would you like to do (choose number)?"
   puts "1. Input the students."
   puts "2. Show the students."
+  puts "3. Save the list to 'students.csv'"
+  puts "4. Load student list from students.csv"
   puts "9. Exit."
 end
 
@@ -21,6 +23,10 @@ def process(choice)
     input_students(@user_input)
   when "2"
     show_students
+  when "3"
+    save_students
+  when "4"
+    load_students
   when "9"
     exit
   else
@@ -30,12 +36,12 @@ end
 
 def input_students input_proc
   puts "Please enter the names & hobbies of the students."
-  puts "To finish, just hit return thrice."
+  puts "To finish, just hit return twice."
 
   input_proc.call
 
   while !@name.empty? do
-    @students << {name: @name, cohort: @cohort, hobby: @hobby}
+    @students << {name: @name, cohort: @cohort}
     if @students.length == 1
       puts "Now we have #{@students.count} student."
     else
@@ -48,8 +54,6 @@ end
 @user_input = Proc.new do
   puts "Name: "
   @name = gets.chomp
-  puts "Hobby: "
-  @hobby = gets.chomp
   puts "Cohort: "
   @cohort = gets.chomp
   @cohort = :november if @cohort.empty?
@@ -71,7 +75,7 @@ end
 def print_students_list
   if @students.count > 0
     @students.each.with_index(1) do |student, index|
-      output = "#{index}.#{student[:name]} (enjoys #{student[:hobby]}) (#{student[:cohort]} cohort)"
+      output = "#{index}.#{student[:name]} (#{student[:cohort]} cohort)"
       puts output.center(180)
     end
   end
@@ -86,6 +90,25 @@ def print_footer
   else
     puts ("Overall we have #{@students.count} great students.").center(180)
   end
+end
+
+def save_students
+  file = File.open("students.csv", "w")
+  @students.each do |student|
+    student_data = [student[:name], student[:cohort]]
+    csv_line = student_data.join(",")
+    file.puts csv_line
+  end
+  file.close
+end
+
+def load_students
+  file = File.open("students.csv", "r")
+  file.readlines.each do |line|
+    name, cohort = line.chomp.split(",")
+    @students << {name: name, cohort: cohort.to_sym}
+  end
+  file.close
 end
 
 interative_menu
