@@ -1,5 +1,33 @@
 puts ""
 
+def interative_menu
+  @students = []
+  loop do
+    print_menu
+    process(gets.chomp)
+  end
+end
+
+def print_menu
+  puts "What would you like to do (choose number)?"
+  puts "1. Input the students."
+  puts "2. Show the students."
+  puts "9. Exit."
+end
+
+def process(choice)
+  case choice
+  when "1"
+    input_students(@user_input)
+  when "2"
+    show_students
+  when "9"
+    exit
+  else
+    puts "I'm not sure what you mean, please choose a number."
+  end
+end
+
 def input_students input_proc
   puts "Please enter the names & hobbies of the students."
   puts "To finish, just hit return thrice."
@@ -25,6 +53,12 @@ end
   puts "Cohort: "
   @cohort = gets.chomp
   @cohort = :november if @cohort.empty?
+end
+
+def show_students
+  print_header
+  print_students_list
+  print_footer
 end
 
 def print_header
@@ -54,6 +88,11 @@ def print_footer
   end
 end
 
+interative_menu
+puts ""
+
+
+=begin
 def name_starter
   puts "Enter the letter you want to view student names by."
   letter = gets.chomp
@@ -72,40 +111,4 @@ def names_shorther_then_12
     end
   end
 end
-
-def print_menu
-  puts "What would you like to do (choose number)?"
-  puts "1. Input the students."
-  puts "2. Show the students."
-  puts "9. Exit."
-end
-
-def show_students
-  print_header
-  print_students_list
-  print_footer
-end
-
-def process(choice)
-  case choice
-  when "1"
-    input_students(@user_input)
-  when "2"
-    show_students
-  when "9"
-    exit
-  else
-    puts "I'm not sure what you mean, please choose a number."
-  end
-end
-
-def interative_menu
-  @students = []
-  loop do
-    print_menu
-    process(gets.chomp)
-  end
-end
-
-interative_menu
-puts ""
+=end
