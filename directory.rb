@@ -1,7 +1,8 @@
 puts ""
 
+@students = []
+
 def interative_menu
-  @students = []
   loop do
     print_menu
     process(STDIN.gets.chomp)
@@ -55,7 +56,7 @@ end
   puts "Name: "
   @name = STDIN.gets.chomp
   puts "Cohort: "
-  @cohort = gets.chomp
+  @cohort = STDIN.gets.chomp
   @cohort = :november if @cohort.empty?
 end
 
@@ -123,6 +124,7 @@ def try_load_students
   end
 end
 
+try_load_students
 interative_menu
 puts ""
 
