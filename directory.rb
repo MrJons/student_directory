@@ -13,7 +13,7 @@ def print_menu
   puts "What would you like to do (choose number)?"
   puts "1. Input the students."
   puts "2. Show the students."
-  puts "3. Save the list to 'students.csv'"
+  puts "3. Save the list to chosen 'csv' file"
   puts "4. Load student list from students.csv"
   puts "9. Exit."
 end
@@ -30,6 +30,7 @@ def process(choice)
     load_students
   when "9"
     exit
+    feedback
   else
     puts "I'm not sure what you mean, please choose a number."
   end
@@ -38,9 +39,7 @@ end
 def input_students input_proc
   puts "Please enter the names & hobbies of the students."
   puts "To finish, just hit return twice."
-
   input_proc.call
-
   while !@name.empty? do
     @students << {name: @name, cohort: @cohort}
     if @students.length == 1
@@ -76,8 +75,7 @@ end
 def print_students_list
   if @students.count > 0
     @students.each.with_index(1) do |student, index|
-      output = "#{index}.#{student[:name]} (#{student[:cohort]} cohort)"
-      puts output.center(180)
+      puts "#{index}.#{student[:name]} (#{student[:cohort]} cohort)".center(180)
     end
   end
 end
@@ -93,14 +91,21 @@ def print_footer
   end
 end
 
+def feedback
+  puts "Request completed."
+end
+
 def save_students
-  file = File.open("students.csv", "w")
+  puts "Enter chosen filename (no type required)."
+  filename = gets.chomp
+  file = File.open("#{filename}.csv", "w")
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
     file.puts csv_line
   end
   file.close
+  feedback
 end
 
 def load_students(filename = "students.csv")
@@ -110,14 +115,13 @@ def load_students(filename = "students.csv")
     @students << {name: name, cohort: cohort.to_sym}
   end
   file.close
+  puts "Loaded #{@students.count} from #{filename}"
 end
 
 def try_load_students
-  filename = ARGV.first
-  return if filename.nil?
+  filename = ARGV.first || "students.csv" if filename.nil?
   if File.exists?(filename)
     load_students(filename)
-    puts "Loaded #{@students.count} from #{filename}"
   else
     puts "Sorry #{filename} doesn't exist."
     exit
